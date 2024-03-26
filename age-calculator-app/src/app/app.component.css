@@ -1,34 +1,97 @@
+.age-container {
+    display: flex;
+    justify-content: center;
+}
+
 .box {
     margin-top: 4rem;
-    margin-left: 1rem;
     width: 90%;
     background: hsl(0, 0%, 94%);
-    padding: 2rem 3rem 6rem 1rem;
+    padding: 2rem 3rem 6rem 1.5rem;
+    margin-bottom: 8rem;
+    border-radius: 2rem 2rem 7rem 2rem;
 }
 
 .form-grid {
-    display: grid;
-    grid-template: repeat(2, 1fr) / repeat(3, 1fr);
-    grid-column-gap: 0.7rem;
-    grid-auto-flow: dense;
-    width: 100%
+    display: flex;
+    justify-content: space-around;
 }
 
 h2 {
     color: hsl(0, 1%, 44%);
     font-weight: 400;
-    /* border: 1px solid red; */
 }
 
 .input-number {
-    width: 100%;
+    width: 90%;
     border: 1px solid hsl(0, 0%, 86%);
     font-weight: 700;
     font-size: 24px;
     margin-top: -5px;
-    text-align: center;
+    outline: none;
 }
 
 .input-number:hover, .input-number:active {
-    border: 1px solid hsl(259, 100%, 65%);
+    border: 2px solid hsl(259, 100%, 65%) !important;
 }
+
+.line-divider {
+    position: relative;
+    height: 1px;
+    width: 100%;
+    background-color: hsl(0, 0%, 86%);
+    margin: 20px auto;
+}
+
+.circle {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: hsl(259, 100%, 65%);
+    padding: 3%;
+    border-radius: 50%;
+}
+
+
+.age-section {
+    display: flex;
+    justify-content: center;
+}
+
+.age {
+    margin-top: 15%;
+    font-size: 10vw;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.purple-font {
+    color: hsl(259, 100%, 65%);
+}
+
+.input-group {
+    margin-top: 2px;
+}
+
+.error-message {
+    font-size: 2vw;
+    line-height: 1px;
+    color: hsl(0, 100%, 67%);
+    font-style: italic;
+}
+
+.error-label {
+    color: hsl(0, 100%, 67%);
+}
+
+.help-block {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid hsl(0, 100%, 67%);
+  }
