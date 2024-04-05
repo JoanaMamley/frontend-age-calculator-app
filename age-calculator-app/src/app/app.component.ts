@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Age } from './app.model';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +16,17 @@ export class AppComponent implements OnInit{
     const currentYear = new Date().getFullYear();
 
     this.ageForm = new FormGroup({
-      'day': new FormControl(null, [Validators.required, this.dayValidator.bind(this), Validators.min(1), Validators.max(31)]),
+      'day': new FormControl(null, [Validators.required, Validators.min(1), Validators.max(31)]),
       'month': new FormControl(null, [Validators.required, Validators.min(1), Validators.max(12)]),
       'year': new FormControl(null, [Validators.required, Validators.max(currentYear)])
     })
 
+    this.ageForm.setValidators(this.dateValidator());
+
     this.ageForm.valueChanges.subscribe(value => {
+      if (this.ageForm.errors) {
+        console.log(this.ageForm.errors['dateError'])
+      }
       this.isFormInvalidOrUnfilled = this.isFormInvalidOrEmpty();
 
       if (!this.isFormInvalidOrUnfilled) {
@@ -33,26 +38,28 @@ export class AppComponent implements OnInit{
     });
   }
 
-  private dayValidator(control: FormControl) {
-    const day = parseInt(control.value);
-    const month = parseInt(this.ageForm.get('month')?.value);
-    const year = parseInt(this.ageForm.get('year')?.value);
+  dateValidator() {
+    return (formGroup: FormGroup) => {
+      const day = parseInt(formGroup.get('day').value);
+      const month = parseInt(formGroup.get('month').value);
+      const year = parseInt(formGroup.get('year').value);
 
-    if (month === 2) {
-      if (this.isLeapYear(year) && day > 29) return { 'dayError': true }
-      if (!this.isLeapYear(year) && day > 28) return { 'dayError': true }
-    }
+      if (month === 2) {
+      if (this.isLeapYear(year) && day > 29)  return { 'dateError': true }
+        if (!this.isLeapYear(year) && day > 28) return { 'dateError': true }
+      }
+  
+      if ((month === 9 || month === 4 || month === 6 || month === 11) && day > 30) return { 'dateError': true }
+  
+      if (day > 31) return { 'dateError': true }
 
-    if ((month === 9 || month === 4 || month === 6 || month === 11) && day > 30) return { 'dayError': true }
-
-    if (day > 31) return { 'dayError': true };
-      
-    return null;
+      return null;
+    };
   }
 
   private isLeapYear(year: number): boolean {
     return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-}
+  }
 
   private calculateAge(birthdate: Date): Age {
     const today: Date = new Date();
@@ -76,7 +83,7 @@ export class AppComponent implements OnInit{
     }
 
     return { years, months, days };
-}
+  }
 
   isFormInvalidOrEmpty(): boolean {
     return this.ageForm.invalid || this.areControlsEmpty();
@@ -91,6 +98,10 @@ export class AppComponent implements OnInit{
       }
     }
     return false; 
+  }
+
+  get hasDateError(): boolean {
+    return this.ageForm.errors && this.ageForm.errors['dateError'];
   }
 
 }

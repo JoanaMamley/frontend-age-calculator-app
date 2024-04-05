@@ -92,6 +92,6 @@ h2 {
     gap: 1rem;
 }
 
-input.ng-invalid.ng-touched {
+input.ng-invalid.ng-touched, .date-error {
     border: 1px solid hsl(0, 100%, 67%);
   }
