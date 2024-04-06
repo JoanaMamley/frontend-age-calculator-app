@@ -3,18 +3,18 @@
     <form [formGroup]="ageForm" class="form-grid">
         <div>
           <h3 [ngClass]="[(!ageForm.get('day')?.valid && ageForm.get('day')?.touched) || hasDateError ? 'error-label' : '']"> DAY </h3>
-          <input type="text" class="input-number ps-2" formControlName="day" placeholder="DD" [ngClass]="[hasDateError ? 'date-error': '']">
+          <input type="text" class="input-number ps-2 py-2" formControlName="day" placeholder="DD" [ngClass]="[hasDateError ? 'date-error': '']">
           <span *ngIf="!ageForm.get('day')?.valid && ageForm.get('day')?.touched" class="help-block">
             <span *ngIf="ageForm.get('day').errors['required']" class="error-message">This field is required</span>
             <span *ngIf="(ageForm.get('day').errors['max'] || ageForm.get('day').errors['min']) && !ageForm.get('month')?.valid && !ageForm.get('year')?.valid" class="error-message">Must be a valid day</span>
           </span>
           <span class="help-block">
-            <span *ngIf="hasDateError" class="error-message">Must be a valid date</span>
+            <span *ngIf="hasDateError && ageForm.get('day')?.valid && ageForm.get('month')?.valid && ageForm.get('year')?.valid" class="error-message">Must be a valid date</span>
           </span>
         </div>
         <div>
           <h3 [ngClass]="[(!ageForm.get('month')?.valid && ageForm.get('month')?.touched) || hasDateError ? 'error-label' : '']"> MONTH </h3>
-          <input type="text" class="input-number ps-2" formControlName="month" placeholder="MM" [ngClass]="[hasDateError ? 'date-error': '']">
+          <input type="text" class="input-number ps-2 py-2" formControlName="month" placeholder="MM" [ngClass]="[hasDateError ? 'date-error': '']">
           <span *ngIf="!ageForm.get('month')?.valid && ageForm.get('month')?.touched" class="help-block">
             <span *ngIf="ageForm.get('month').errors['required']" class="error-message">This field is required</span>
             <span *ngIf="ageForm.get('month').errors['max'] || ageForm.get('month').errors['min']" class="error-message">Must be a valid month</span>
@@ -22,7 +22,7 @@
         </div>
         <div>
           <h3 [ngClass]="[(!ageForm.get('year')?.valid && ageForm.get('year')?.touched) || hasDateError ? 'error-label' : '']"> YEAR </h3>
-          <input type="text" class="input-number ps-2" formControlName="year" placeholder="YYYY" [ngClass]="[hasDateError ? 'date-error': '']">
+          <input type="text" class="input-number ps-2 py-2" formControlName="year" placeholder="YYYY" [ngClass]="[hasDateError ? 'date-error': '']">
           <span *ngIf="!ageForm.get('year')?.valid && ageForm.get('year')?.touched" class="help-block">
             <span *ngIf="ageForm.get('year').errors['required']" class="error-message">This field is required</span>
             <span *ngIf="ageForm.get('year').errors['max']" class="error-message">Must be in the past</span>
@@ -30,14 +30,14 @@
         </div>
     </form>
   
-    <div class="line-divider mt-5">
+    <div class="line-divider">
       <div class="circle">
         <img src="../assets/images/icon-arrow.svg" alt="">
       </div>
     </div>
   
     <div class="age-section">
-      <div class="age mx-auto">
+      <div class="age">
         <div><span class="purple-font">{{ isFormInvalidOrUnfilled ? '--' : age?.years}}</span> years</div>
         <div><span class="purple-font">{{ isFormInvalidOrUnfilled ? '--' : age?.months}}</span> months</div>
         <div><span class="purple-font">{{ isFormInvalidOrUnfilled ? '--' : age?.days}}</span> days</div>
